@@ -7,43 +7,45 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.NoArgsConstructor;
-import lombok.Data;
-import lombok.Builder;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
-@NoArgsConstructor
-@Data
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
+@Getter
+@ToString(exclude="password")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="user")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    int id;
+    private int id;
 
-    @Column(name="email")
-    String email;
+    @Column(name="email", nullable = false)
+    private String email;
 
-    @Column(name="password")
-    String password;
+    @Setter
+    @JsonIgnore
+    @Column(name="password", nullable = false)
+    private String password;
 
+    @Setter
     @Column(name="username")
-    String username;
+    private String username;
 
+    @Setter
     @Column(name="profile_image")
     @Type(type="text")
-    String profile_image;
+    private String profile_image;
 
     @Builder
-    public User(int id, String email, String password, String username, String profile_image){
-        super();
-        this.id = id;
+    public User(String email, String password, String username){
         this.email = email;
         this.password = password;
         this.username = username;
-        this.profile_image = profile_image;
     }
 
 }
