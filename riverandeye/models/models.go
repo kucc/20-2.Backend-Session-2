@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/jinzhu/gorm"
-	setting "github.com/kucc/20-2.Backend-Session-2/riverandeye/pkg"
+	"github.com/kucc/20-2.Backend-Sesson-2/riverandeye/pkg/setting"
 )
 
 var db *gorm.DB
