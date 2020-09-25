@@ -24,7 +24,7 @@ var cfg *ini.File
 // Setup is for initialize settings
 func Setup() {
 	var err error
-	cfg, err = ini.Load("conf/app.ini")
+	cfg, err = ini.LoadSources(ini.LoadOptions{UnescapeValueCommentSymbols: false}, "conf/app.ini")
 	if err != nil {
 		log.Fatalf("setting.Setup, fail to parse 'conf/app.ini': %v", err)
 	}
