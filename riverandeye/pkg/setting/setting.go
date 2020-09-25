@@ -2,6 +2,7 @@ package setting
 
 import (
 	"log"
+	"time"
 
 	"gopkg.in/ini.v1"
 )
@@ -19,6 +20,17 @@ type Database struct {
 // DatabaseSetting is setting for database
 var DatabaseSetting = &Database{}
 
+// Server Setting Type
+type Server struct {
+	RunMode      string
+	HTTPPort     int
+	ReadTimeout  time.Duration
+	WriteTimeout time.Duration
+}
+
+// ServerSetting Object
+var ServerSetting = &Server{}
+
 var cfg *ini.File
 
 // Setup is for initialize settings
@@ -30,7 +42,10 @@ func Setup() {
 	}
 
 	mapTo("database", DatabaseSetting)
+	mapTo("server", ServerSetting)
 
+	ServerSetting.ReadTimeout = ServerSetting.ReadTimeout * time.Second
+	ServerSetting.WriteTimeout = ServerSetting.WriteTimeout * time.Second
 }
 
 func mapTo(section string, v interface{}) {
