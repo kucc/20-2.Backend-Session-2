@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql" // for using mysql driver
+
 	"github.com/kucc/20-2.Backend-Session-2/riverandeye/pkg/setting"
 )
 
