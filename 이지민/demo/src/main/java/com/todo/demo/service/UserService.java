@@ -10,8 +10,12 @@ import java.util.List;
 @Service
 public class UserService {
 
+    private final UserRepository userRepository;
+
     @Autowired
-    UserRepository userRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public List<User> findAll(){
         List<User> list = userRepository.findAll();
@@ -23,7 +27,7 @@ public class UserService {
         return list;
     }
 
-    public User findOne(int id){
+    public User findOne(long id){
         User user = userRepository.getOne(id);
         System.out.println(user);
         return user;

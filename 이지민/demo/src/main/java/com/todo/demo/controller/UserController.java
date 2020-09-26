@@ -1,7 +1,5 @@
 package com.todo.demo.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.todo.demo.model.User;
 import com.todo.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +10,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
+    private final UserService userService;
+
     @Autowired
-    UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping(path="")
     public List<User> getUsers(){
@@ -23,15 +26,12 @@ public class UserController {
     }
 
     @GetMapping(path="/{id}")
-    public String getOneUser(@PathVariable("id") long id) throws JsonProcessingException {
+    public User getOneUser(@PathVariable long id){
         System.err.println("UserController getOneUser");
-        Integer select_id = (int)id;
 
-        User user = userService.findOne(select_id);
-        ObjectMapper objectMapper = new ObjectMapper();
+        User user = userService.findOne(id);
 
-        String userJson = objectMapper.writeValueAsString(user);
-        return userJson;
+        return user;
     }
 
 
