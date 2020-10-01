@@ -11,7 +11,6 @@ export class User {
   static getHashPassword(password: string): string {
     const salt = bcrypt.genSaltSync(10);
     const hashPassword = bcrypt.hashSync(password, salt);
-    console.log(hashPassword);
     return hashPassword;
   }
 
