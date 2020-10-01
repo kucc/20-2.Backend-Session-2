@@ -1,5 +1,6 @@
 import { Controller, Post, Get, Body } from '@nestjs/common';
 import { UserService } from './user.service';
+import { addUserDto } from '../entity/dto/adduser.dto';
 // ~~/user
 @Controller('user')
 export class UserController {
@@ -10,10 +11,7 @@ export class UserController {
     return await this.userService.getAllUser();
   }
   @Post()
-  public addUser(
-    @Body('email') userEmail: string,
-    @Body('password') userPassword: string,
-    @Body('username') username: string,
-    @Body('profile_image') userImg: string,
-  ): any {}
+  public async addUser(@Body() addUserDto: addUserDto): Promise<any> {
+    return await this.userService.addUser(addUserDto);
+  }
 }
