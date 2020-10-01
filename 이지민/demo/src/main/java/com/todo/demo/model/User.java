@@ -24,16 +24,16 @@ public class User {
     @Column(name="id")
     private Long id;
 
-    @Column(name="email", nullable = false)
+    @Column(name="email", nullable = false, length=320)
     private String email;
 
     @Setter
     @JsonIgnore
-    @Column(name="password", nullable = false)
+    @Column(name="password", nullable = false, length=1000)
     private String password;
 
     @Setter
-    @Column(name="username")
+    @Column(name="username",length = 100)
     private String username;
 
     @Setter
