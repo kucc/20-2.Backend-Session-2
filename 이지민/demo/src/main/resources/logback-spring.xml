@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_DIR" value="${user.home}/logs/app"/>
+    <property name ="LOG_PATH" value="${LOG_DIR}/app.log"/>
+    <include resource="./log/console.xml" />
+    <include resource="./log/file.xml" />
+
+    <root level="INFO">
+        <appender-ref ref="ROLLING_FILE"/>
+    </root>
+</configuration>

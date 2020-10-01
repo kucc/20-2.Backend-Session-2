@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_PATH}</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <fileNamePattern>${LOG_DIR}/tomcat_log.%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
+        <maxHistory>30</maxHistory>
+        <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <maxFileSize>10MB</maxFileSize>
+        </timeBasedFileNamingAndTriggeringPolicy>
+        <maxHistory>60</maxHistory>
+    </rollingPolicy>
+    <encoder>
+        <charset>UTF-8</charset>
+        <pattern>%d{yyyy:MM:dd HH:mm:ss.SSS} %-5level --- [%thread] %logger{35} : %msg %n</pattern>
+    </encoder>
+</appender>
