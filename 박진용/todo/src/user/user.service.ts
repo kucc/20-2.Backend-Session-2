@@ -3,6 +3,7 @@ import { UserEntity } from 'src/entity/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './dto/user.dto';
+import { LoginUserDto } from './dto/loginuser.dto';
 
 @Injectable()
 export class UserService {
@@ -17,7 +18,12 @@ export class UserService {
     return newUser;
   }
 
-  public async getAllUser(): Promise<UserEntity[]> {
-    return await this.userRepository.find();
+  public async getUserInfoByEmail(email): Promise<UserEntity[]> {
+    return await this.userRepository.find({ where: { email: email } });
   }
+  public async isUniqueEmail(email: string) {
+    const user = await this.userRepository.find({ where: { email: email } });
+    return user ? false : true;
+  }
+  public async getLoginInfo({ email, password }: LoginUserDto) {}
 }
