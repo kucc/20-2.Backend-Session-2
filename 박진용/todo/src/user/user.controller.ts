@@ -16,16 +16,12 @@ import { Response } from 'express';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get(':email')
-  public async getUserInfo(@Param('email') email) {
-    return await this.userService.getUserInfoByEmail(email);
-  }
-
   @Post()
   public async addUser(
     @Res() response: Response,
     @Body() addUserDto: addUserDto,
   ): Promise<any> {
+    //service 부분으로 refactor하기
     const newUser = new User(addUserDto);
     const isUnique = await this.userService.isUniqueEmail(newUser.email);
     if (!isUnique) {
@@ -34,7 +30,7 @@ export class UserController {
         .json({ result: '이미 존재하는 이메일' });
       return;
     }
-
-    return await this.userService.addUser(newUser);
+    await this.userService.addUser(newUser);
+    response.status(HttpStatus.OK).json({ result: 'success!' });
   }
 }

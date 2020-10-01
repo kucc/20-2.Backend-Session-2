@@ -1,5 +1,4 @@
 import { addUserDto } from './adduser.dto';
-import * as bcrypt from 'bcrypt';
 export class User {
   public constructor(addUserRequest: addUserDto) {
     this.email = addUserRequest.email;
