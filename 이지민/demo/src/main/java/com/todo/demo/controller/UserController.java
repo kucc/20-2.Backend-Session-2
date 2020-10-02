@@ -20,15 +20,12 @@ public class UserController {
 
     @GetMapping(path="")
     public List<User> getUsers(){
-        System.err.println("UserController getUsers");
         List<User> users = userService.findAll();
         return users;
     }
 
     @GetMapping(path="/{id}")
     public User getOneUser(@PathVariable long id){
-        System.err.println("UserController getOneUser");
-
         User user = userService.findOne(id);
 
         return user;
