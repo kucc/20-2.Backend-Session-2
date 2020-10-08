@@ -21,12 +21,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AuthService authService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    @Autowired
-    public WebSecurityConfig(AuthService authService, JwtTokenProvider jwtTokenProvider){
-        this.authService = authService;
+    public WebSecurityConfig(JwtTokenProvider jwtTokenProvider){
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
@@ -60,13 +57,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         UsernamePasswordAuthenticationFilter.class)
                 ;
     }
-
-    // spring security 의 모든 인증은 authenticationManager 를 통해 이뤄진다.
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(authService).passwordEncoder(passwordEncoder());
-        // authService 는 userDetailsService 를 implements 해야 한다.
-    }
-
-
 }

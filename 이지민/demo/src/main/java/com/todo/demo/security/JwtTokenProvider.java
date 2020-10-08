@@ -28,7 +28,6 @@ public class JwtTokenProvider {
 
     private final AuthService authService;
 
-    @Autowired
     public JwtTokenProvider(AuthService authService) {
         this.authService = authService;
     }
