@@ -1,8 +1,6 @@
 package com.todo.demo.dto.user;
 
 import com.todo.demo.model.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
