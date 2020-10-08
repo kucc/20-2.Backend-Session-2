@@ -1,32 +1,44 @@
 package com.todo.demo.config;
 
+import com.todo.demo.security.JwtAuthenticationFilter;
+import com.todo.demo.security.JwtTokenProvider;
 import com.todo.demo.service.AuthService;
-import com.todo.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthService authService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Autowired
-    public WebSecurityConfig(AuthService authService){
+    public WebSecurityConfig(AuthService authService, JwtTokenProvider jwtTokenProvider){
         this.authService = authService;
+        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Override
@@ -37,27 +49,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // 인증 설정
-        http.authorizeRequests()
-                .antMatchers("/login", "/signup", "/user").permitAll() // 누구나 접근 가능
-                .antMatchers("/").hasRole("USER") // USER, ADMIN 만 접근 가능
-                .antMatchers("/admin").hasRole("ADMIN") // ADMIN 만 접근 가능
-                .anyRequest().authenticated() // 나머지 요청들은 권한이 있어야 접근 가능
+        http.httpBasic().disable()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .formLogin()
-                .loginPage("/login") //로그인 페이지 링크
-                .defaultSuccessUrl("/") // 로그인 성공 후 리다이렉트 주소
+                .authorizeRequests()
+                .antMatchers("/**").authenticated() // 누구나 접근 가능
                 .and()
-                .logout()
-                .logoutSuccessUrl("/login") //로그아웃 성공 시 리다이렉트 주소
-                .invalidateHttpSession(true) // 세션 날리기
-        ;
-
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
+                        UsernamePasswordAuthenticationFilter.class)
+                ;
     }
 
+    // spring security 의 모든 인증은 authenticationManager 를 통해 이뤄진다.
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(authService).passwordEncoder(passwordEncoder());
-        // authService는 userDetailsService를 implements해야 한다.
+        // authService 는 userDetailsService 를 implements 해야 한다.
     }
 
 
