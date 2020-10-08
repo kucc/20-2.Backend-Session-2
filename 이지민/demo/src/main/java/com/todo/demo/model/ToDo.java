@@ -2,7 +2,6 @@ package com.todo.demo.model;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,16 +14,14 @@ import java.time.LocalDateTime;
 public class ToDo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
     private Long id;
 
     @Setter
-    @Column(name="content")
-    @Type(type="text")
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @Setter
-    @Column(name="finished", columnDefinition = "TINYINT")
+    @Column(columnDefinition = "TINYINT")
     private Boolean finished;
 
     @Column(name="created_at")

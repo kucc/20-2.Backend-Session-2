@@ -5,7 +5,6 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import org.hibernate.annotations.Type;
 import org.modelmapper.internal.util.Assert;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,24 +20,22 @@ import java.util.*;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
     private Long id;
 
-    @Column(name="email", unique = true, nullable = false, length=320)
+    @Column(unique = true, nullable = false, length=320)
     private String email;
 
     @Setter
     @JsonIgnore
-    @Column(name="password", nullable = false, length=1000)
+    @Column(nullable = false, length=1000)
     private String password;
 
     @Setter
-    @Column(name="username",length = 100)
+    @Column(length = 100)
     private String username;
 
     @Setter
-    @Column(name="profile_image")
-    @Type(type="text")
+    @Column(columnDefinition = "TEXT")
     private String profile_image;
 
     @Setter

@@ -15,7 +15,7 @@ public class UserCategory {
     private Long id;
 
     @Setter
-    @Column(name="level", columnDefinition = "TINYINT")
+    @Column(columnDefinition = "TINYINT")
     private int level;
 
     @Setter
