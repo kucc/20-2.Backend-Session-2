@@ -1,11 +1,6 @@
 package com.todo.demo.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -13,12 +8,9 @@ import lombok.*;
 import org.hibernate.annotations.Type;
 import org.modelmapper.internal.util.Assert;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
@@ -48,6 +40,10 @@ public class User implements UserDetails {
     @Column(name="profile_image")
     @Type(type="text")
     private String profile_image;
+
+    @Setter
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserCategory> userCategoryList;
 
     private String auth;
 

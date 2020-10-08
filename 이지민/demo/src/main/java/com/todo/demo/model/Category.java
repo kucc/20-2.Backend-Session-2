@@ -3,7 +3,6 @@ package com.todo.demo.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @ToString
@@ -24,7 +23,11 @@ public class Category {
 
     @Setter
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<ToDo> toDos = new ArrayList<ToDo>();
+    private List<ToDo> toDos;
+
+    @Setter
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<UserCategory> userCategoryList;
 
     public void addToDo(ToDo t){
         List<ToDo> toDos = getToDos();

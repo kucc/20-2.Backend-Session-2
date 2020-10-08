@@ -19,13 +19,13 @@ public class UserCategory {
     private int level;
 
     @Setter
-    @ManyToOne
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name="user_id")
     private User user;
 
     @Setter
-    @ManyToOne
-    @JoinColumn(name="catetory_id")
+    @ManyToOne(targetEntity = Category.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="category_id")
     private Category category;
 
     @Builder

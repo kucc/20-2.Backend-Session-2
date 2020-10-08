@@ -36,7 +36,8 @@ public class ToDo {
     @CreationTimestamp
     private LocalDateTime finishedAt;
 
-    @ManyToOne
+    @Setter
+    @ManyToOne(targetEntity = Category.class, fetch = FetchType.LAZY)
     @JoinColumn(name="category_id")
     private Category category;
 
