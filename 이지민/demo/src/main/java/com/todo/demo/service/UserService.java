@@ -13,12 +13,10 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository, ModelMapper modelMapper) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
     }
 
 
@@ -28,8 +26,7 @@ public class UserService {
     }
 
     public User findOne(long id){
-        User user = userRepository.getOne(id);;
-        //UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+        User user = userRepository.getOne(id);
 
         return user;
     }
