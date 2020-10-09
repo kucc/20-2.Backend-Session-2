@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @ToString
 @Table(name="category")
@@ -14,7 +15,7 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Setter
     @Column(length=100)
@@ -25,8 +26,8 @@ public class Category {
     private List<ToDo> toDos;
 
     @Setter
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<UserCategory> userCategoryList;
+    @OneToMany(mappedBy="category")
+    private Set<UserHasCategory> users;
 
     public void addToDo(ToDo t){
         List<ToDo> toDos = getToDos();

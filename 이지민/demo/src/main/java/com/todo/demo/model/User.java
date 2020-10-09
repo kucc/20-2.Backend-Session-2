@@ -20,7 +20,7 @@ import java.util.*;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(unique = true, nullable = false, length=320)
     private String email;
@@ -39,17 +39,17 @@ public class User implements UserDetails {
     private String profile_image;
 
     @Setter
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<UserCategory> userCategoryList;
+    @OneToMany(mappedBy = "user")
+    private Set<UserHasCategory> categories;
 
-    private String auth;
 
     @Builder
-    public User(String email, String password, String username){
+    public User(Integer id, String email, String password, String username){
         Assert.notNull(email, "email must not be null");
         Assert.notNull(password, "password must not be null");
         Assert.notNull(username, "username must not be null");
 
+        this.id = id;
         this.email = email;
         this.password = password;
         this.username = username;
