@@ -12,9 +12,10 @@
     <springProperty scope="context" name="LOG_LEVEL" source="logging.level.root"/>
 
     <!-- log file path -->
-    <property name="LOG_PATH" value="${log.config.path}"/>
+    <springProperty scope="context" name="LOG_PATH" source="logging.file.path"/>
     <!-- log file name -->
-    <property name ="LOG_FILE_NAME" value="${log.config.filename}"/>
+    <springProperty scope="context" name="LOG_FILE_NAME" source="logging.file.name"/>
+
 
     <include resource="./log/console.xml" />
     <include resource="./log/file.xml" />

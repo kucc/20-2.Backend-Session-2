@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <!-- file path -->
-    <file>${LOG_PATH}/${LOG_FILE_NAME}.log</file>
+    <file>${LOG_PATH}\${LOG_FILE_NAME}.log</file>
 
     <!-- log pattern -->
     <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -10,7 +10,7 @@
 
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
         <!-- gz, zip 넣으면 일자별 로그 압축 -->
-        <fileNamePattern>${LOG_PATH}/${LOG_FILE_NAME}.%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
+        <fileNamePattern>${LOG_PATH}\${LOG_FILE_NAME}.%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
         <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
 
             <maxFileSize>10MB</maxFileSize>
