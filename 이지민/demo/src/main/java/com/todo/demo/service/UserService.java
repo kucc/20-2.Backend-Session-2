@@ -4,11 +4,14 @@ import com.todo.demo.dto.user.UserDto;
 import com.todo.demo.model.User;
 import com.todo.demo.repository.UserRepository;
 import com.todo.demo.security.JwtTokenProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class UserService {
 
@@ -34,12 +37,11 @@ public class UserService {
         return user;
     }
 
-    public User createUser(UserDto.Request requestDto){
+    @Transactional
     public Integer createUser(UserDto.Request requestDto){
         requestDto.setPassword(passwordEncoder.encode(requestDto.getPassword()));
         User user = requestDto.toEntity();
-        userRepository.save(user);
-        return user;
+        return userRepository.save(user).getId();
     }
 
     public Boolean emailDoesNotExist(String email){
