@@ -1,16 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <file>${LOG_PATH}</file>
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-        <fileNamePattern>${LOG_DIR}/tomcat_log.%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
-        <maxHistory>30</maxHistory>
-        <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-            <maxFileSize>10MB</maxFileSize>
-        </timeBasedFileNamingAndTriggeringPolicy>
-        <maxHistory>60</maxHistory>
-    </rollingPolicy>
-    <encoder>
-        <charset>UTF-8</charset>
+<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- file path -->
+    <file>${LOG_PATH}/${LOG_FILE_NAME}.log</file>
+
+    <!-- log pattern -->
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
         <pattern>%d{yyyy:MM:dd HH:mm:ss.SSS} %-5level --- [%thread] %logger{35} : %msg %n</pattern>
     </encoder>
+
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+        <!-- gz, zip 넣으면 일자별 로그 압축 -->
+        <fileNamePattern>${LOG_PATH}/${LOG_FILE_NAME}.%d{yyyy-MM-dd}-%i.log.gz</fileNamePattern>
+        <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+
+            <maxFileSize>10MB</maxFileSize>
+
+        </timeBasedFileNamingAndTriggeringPolicy>
+
+        <maxHistory>30</maxHistory>
+
+    </rollingPolicy>
+
 </appender>

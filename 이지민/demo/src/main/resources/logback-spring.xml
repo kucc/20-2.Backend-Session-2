@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property name="LOG_DIR" value="${user.home}/logs/app"/>
-    <property name ="LOG_PATH" value="${LOG_DIR}/app.log"/>
+
+    <springProfile name="local">
+        <property resource = "logback-local.properties"/>
+    </springProfile>
+
+    <springProfile name="dev">
+        <property resource = "logback-dev.properties"/>
+    </springProfile>
+
+    <springProperty scope="context" name="LOG_LEVEL" source="logging.level.root"/>
+
+    <!-- log file path -->
+    <property name="LOG_PATH" value="${log.config.path}"/>
+    <!-- log file name -->
+    <property name ="LOG_FILE_NAME" value="${log.config.filename}"/>
+
     <include resource="./log/console.xml" />
     <include resource="./log/file.xml" />
 
-    <root level="INFO">
-        <appender-ref ref="ROLLING_FILE"/>
+    <root level="${LOG_LEVEL}">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
     </root>
 </configuration>
