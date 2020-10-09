@@ -16,6 +16,7 @@ public class UserDto {
     @Getter
     @Setter
     public static class Request{
+        private Integer id;
         private String email;
         private String password;
         private String confirmedPassword;
@@ -33,11 +34,9 @@ public class UserDto {
     @Getter
     @Setter
     public static class Response{
-        private Long id;
+        private Integer id;
         private String email;
         private String username;
-
-        public Response(){}
 
         public Response(User user) {
             this.id = user.getId();

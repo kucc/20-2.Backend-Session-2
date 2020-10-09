@@ -28,13 +28,14 @@ public class UserService {
         return list;
     }
 
-    public User findOne(long id){
+    public User findOne(int id){
         User user = userRepository.getOne(id);
 
         return user;
     }
 
     public User createUser(UserDto.Request requestDto){
+    public Integer createUser(UserDto.Request requestDto){
         requestDto.setPassword(passwordEncoder.encode(requestDto.getPassword()));
         User user = requestDto.toEntity();
         userRepository.save(user);

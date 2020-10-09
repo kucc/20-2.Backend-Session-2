@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @GetMapping(path="/{id}")
-    public ResponseEntity<UserDto.Response> getOneUser(@PathVariable long id){
+    public ResponseEntity<UserDto.Response> getOneUser(@PathVariable int id){
         User user = userService.findOne(id);
 
         return ResponseEntity.ok().body(new UserDto.Response(user));
