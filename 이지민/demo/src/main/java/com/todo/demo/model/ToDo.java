@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class ToDo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Setter
     @Column(columnDefinition = "TEXT")
@@ -34,7 +34,7 @@ public class ToDo {
     private LocalDateTime finishedAt;
 
     @Setter
-    @ManyToOne(targetEntity = Category.class, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
 
