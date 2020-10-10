@@ -1,7 +1,8 @@
 package com.todo.demo.service;
 
-import com.todo.demo.dto.user.UserDto;
+import com.todo.demo.dto.UserDto;
 import com.todo.demo.model.User;
+import com.todo.demo.model.UserHasCategory;
 import com.todo.demo.repository.UserRepository;
 import com.todo.demo.security.JwtTokenProvider;
 import lombok.extern.slf4j.Slf4j;
@@ -56,6 +57,15 @@ public class UserService {
     public String createTokenById(String email){
         User user = userRepository.findByEmail(email);
         return jwtTokenProvider.createToken(String.valueOf(user.getId()));
+    }
+
+    public User addCategory(User user, UserHasCategory userHasCategory){
+        user.addCategory(userHasCategory);
+        return user;
+    }
+
+    public void getCategories(User user){
+
     }
 
 }

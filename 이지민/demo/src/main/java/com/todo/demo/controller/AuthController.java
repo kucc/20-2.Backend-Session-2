@@ -1,6 +1,6 @@
 package com.todo.demo.controller;
 
-import com.todo.demo.dto.user.UserDto;
+import com.todo.demo.dto.UserDto;
 import com.todo.demo.exception.CustomUserNotFoundException;
 import com.todo.demo.model.User;
 import com.todo.demo.service.UserService;
