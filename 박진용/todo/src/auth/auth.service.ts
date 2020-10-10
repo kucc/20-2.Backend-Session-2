@@ -6,8 +6,10 @@ import { LoginUserDto } from 'src/user/dto/loginuser.dto';
 import { UserService } from 'src/user/user.service';
 import { Repository } from 'typeorm';
 import { User } from '../user/dto/user.dto';
-import { JwtPayload } from './jwt.strategy';
 
+export interface JwtPayload {
+  username: string;
+}
 @Injectable()
 export class AuthService {
   constructor(
@@ -20,14 +22,13 @@ export class AuthService {
   public async login(loginUserDto: LoginUserDto) {
     const user = await this.userService.getLogin(loginUserDto);
     const token = this._createToken(user);
-
     return { username: user.username, token };
   }
 
   private _createToken({ username }: User): any {
     const user: JwtPayload = { username };
     const accessToken = this.jwtService.sign(user);
-    return accessToken;
+    return { Authentication: accessToken };
   }
   public async validateUser(payload: JwtPayload): Promise<User> {
     const user = await this.userService.findByPayload(payload);

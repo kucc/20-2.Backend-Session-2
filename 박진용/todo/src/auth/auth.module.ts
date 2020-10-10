@@ -14,7 +14,7 @@ import { AuthController } from './auth.controller';
       property: 'user',
       session: false,
     }),
-    JwtModule.register({ secret: process.env.SECRETKEY }),
+    JwtModule.register({ secret: process.env.JWT_SECRET_KEY }),
     TypeOrmModule.forFeature([UserEntity]),
     forwardRef(() => UserModule),
   ],
