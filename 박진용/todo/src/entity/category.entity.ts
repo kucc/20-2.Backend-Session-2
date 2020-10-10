@@ -14,7 +14,7 @@ export class CategoryEntity {
     type => UserHasCategoryEntity,
     userHasCategory => userHasCategory.category,
   )
-  userHasCategory: UserHasCategoryEntity[];
+  userHasCategorys: UserHasCategoryEntity[];
 
   @OneToMany(
     type => TodoEntity,

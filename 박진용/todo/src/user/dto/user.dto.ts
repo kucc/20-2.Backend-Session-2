@@ -2,7 +2,6 @@ import { addUserDto } from './adduser.dto';
 export class User {
   public constructor(addUserRequest: addUserDto) {
     this.email = addUserRequest.email;
-    this.password = addUserRequest.password;
     this.username = addUserRequest.username;
     this.profile_image = addUserRequest.profile_image;
   }

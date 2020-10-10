@@ -6,15 +6,31 @@ import {
   Res,
   HttpStatus,
   Param,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { addUserDto } from './dto/adduser.dto';
 import { User } from './dto/user.dto';
-import { AuthService } from 'src/auth/auth.service';
 import { Response } from 'express';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+
+declare namespace Express {
+  export interface Request {
+    user: User;
+  }
+}
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  public async getUserInfo(@Req() req, @Res() response: Response) {
+    const user = req.user;
+
+    response.send(user);
+  }
 
   @Post()
   public async addUser(

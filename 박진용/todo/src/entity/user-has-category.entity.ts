@@ -2,7 +2,7 @@ import { Entity, Column, ManyToOne } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { CategoryEntity } from './category.entity';
 
-@Entity('user_has_category')
+@Entity('userHasCategory')
 export class UserHasCategoryEntity {
   @Column({ type: 'tinyint', nullable: true })
   level: number;
