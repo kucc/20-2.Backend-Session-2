@@ -3,8 +3,8 @@ package com.todo.demo.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @ToString
 @Table(name="category")
@@ -15,16 +15,19 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
-    private Long id;
+    private Integer id;
 
     @Setter
-    @Column(name="title", length=100)
+    @Column(length=100)
     private String title;
 
     @Setter
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<ToDo> toDos = new ArrayList<ToDo>();
+    private List<ToDo> toDos;
+
+    @Setter
+    @OneToMany(mappedBy="category")
+    private Set<UserHasCategory> users;
 
     public void addToDo(ToDo t){
         List<ToDo> toDos = getToDos();

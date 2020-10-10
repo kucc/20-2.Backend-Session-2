@@ -1,8 +1,10 @@
 package com.todo.demo.controller;
 
+import com.todo.demo.dto.user.UserDto;
 import com.todo.demo.model.User;
 import com.todo.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,25 +15,21 @@ public class UserController {
 
     private final UserService userService;
 
-    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping(path="")
-    public List<User> getUsers(){
-        System.err.println("UserController getUsers");
+    public ResponseEntity<List<User>> getUsers(){
         List<User> users = userService.findAll();
-        return users;
+        return ResponseEntity.ok().body(users);
     }
 
     @GetMapping(path="/{id}")
-    public User getOneUser(@PathVariable long id){
-        System.err.println("UserController getOneUser");
-
+    public ResponseEntity<UserDto.Response> getOneUser(@PathVariable int id){
         User user = userService.findOne(id);
 
-        return user;
+        return ResponseEntity.ok().body(new UserDto.Response(user));
     }
 
 
