@@ -1,4 +1,4 @@
-package com.todo.demo.dto.user;
+package com.todo.demo.dto;
 
 import com.todo.demo.model.User;
 import lombok.Getter;
@@ -16,7 +16,6 @@ public class UserDto {
     @Getter
     @Setter
     public static class Request{
-        private Integer id;
         private String email;
         private String password;
         private String confirmedPassword;
@@ -24,7 +23,6 @@ public class UserDto {
 
         public User toEntity(){
             return User.builder()
-                    .id(id)
                     .email(email)
                     .password(password)
                     .username(username)

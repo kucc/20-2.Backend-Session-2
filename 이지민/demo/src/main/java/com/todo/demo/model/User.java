@@ -42,14 +42,18 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private Set<UserHasCategory> categories;
 
+    public void addCategory(UserHasCategory category){
+        Set<UserHasCategory> categories = this.getCategories();
+        categories.add(category);
+    }
+
 
     @Builder
-    public User(Integer id, String email, String password, String username){
+    public User(String email, String password, String username){
         Assert.notNull(email, "email must not be null");
         Assert.notNull(password, "password must not be null");
         Assert.notNull(username, "username must not be null");
 
-        this.id = id;
         this.email = email;
         this.password = password;
         this.username = username;

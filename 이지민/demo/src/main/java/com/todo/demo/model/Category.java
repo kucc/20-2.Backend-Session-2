@@ -1,6 +1,7 @@
 package com.todo.demo.model;
 
 import lombok.*;
+import org.modelmapper.internal.util.Assert;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,19 +24,25 @@ public class Category {
 
     @Setter
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<ToDo> toDos;
+    private List<ToDo> toDoList;
 
     @Setter
     @OneToMany(mappedBy="category")
     private Set<UserHasCategory> users;
 
     public void addToDo(ToDo t){
-        List<ToDo> toDos = getToDos();
+        List<ToDo> toDos = getToDoList();
         toDos.add(t);
+    }
+
+    public void addUser(UserHasCategory user){
+        Set<UserHasCategory> users = getUsers();
+        users.add(user);
     }
 
     @Builder
     public Category(String title){
+        Assert.notNull(title, "title must not be null");
         this.title = title;
     }
 }
