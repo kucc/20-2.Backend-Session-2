@@ -18,6 +18,8 @@ public class CategoryService {
 
     public Category createCategory(CategoryDto.Request requestDto){
         Category category = requestDto.toEntity();
+        return categoryRepository.save(category);
+    }
         return category;
     }
 

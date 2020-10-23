@@ -17,12 +17,14 @@ public class UserHasCategoryService {
         this.userHasCategoryRepository = userHasCategoryRepository;
     }
 
-    public UserHasCategory makeUserHasCategory(Category category, User user){
+    public void joinUserAndCategory(Category category, User user){
         UserHasCategory userHasCategory = UserHasCategory.builder()
                 .category(category)
                 .user(user)
                 .level(false)
                 .build();
-        return userHasCategoryRepository.save(userHasCategory);
+
+        userHasCategory = userHasCategoryRepository.save(userHasCategory);
+        user.addCategory(category, userHasCategory);
     }
 }
