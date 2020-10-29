@@ -35,7 +35,7 @@ public class AuthController {
 
         int userId = userService.createUser(requestDto);
         User user = userService.findOne(userId);
-        return ResponseEntity.ok().body(new UserDto.Response(user));
+        return ResponseEntity.ok().body(UserDto.Response.of(user));
     }
 
     @PostMapping("/login")

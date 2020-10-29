@@ -1,8 +1,12 @@
 package com.todo.demo.dto;
 
 import com.todo.demo.model.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserDto {
 
@@ -32,15 +36,24 @@ public class UserDto {
 
     @Getter
     @Setter
+    @AllArgsConstructor
     public static class Response{
         private Integer id;
         private String email;
         private String username;
 
-        public Response(User user) {
-            this.id = user.getId();
-            this.email = user.getEmail();
-            this.username = user.getUsername();
+        public static Response of(User user) {
+            int id = user.getId();
+            String email = user.getEmail();
+            String username = user.getUsername();
+
+            return new Response(id, email, username);
+        }
+
+        public static List<Response> of(List<User> userList){
+            return userList.stream()
+                    .map(Response::of)
+                    .collect(Collectors.toList());
         }
 
 
