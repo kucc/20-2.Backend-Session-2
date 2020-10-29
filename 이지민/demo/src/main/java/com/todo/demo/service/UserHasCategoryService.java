@@ -27,4 +27,23 @@ public class UserHasCategoryService {
         userHasCategory = userHasCategoryRepository.save(userHasCategory);
         user.addCategory(category, userHasCategory);
     }
+
+    public void addUserToCategory(Category category, User user){
+        UserHasCategory userHasCategory = UserHasCategory.builder()
+                .category(category)
+                .user(user)
+                .level(true)
+                .build();
+
+        userHasCategory = userHasCategoryRepository.save(userHasCategory);
+        user.addCategory(category, userHasCategory);
+    }
+
+    public boolean isOwner(Category category, User user){
+        UserHasCategory userHasCategory = userHasCategoryRepository.findByUserAndCategory(user, category);
+        if(userHasCategory == null){
+            return false;
+        }
+        return !userHasCategory.getLevel();
+    }
 }

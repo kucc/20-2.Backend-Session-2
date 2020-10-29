@@ -1,9 +1,11 @@
 package com.todo.demo.service;
 
 import com.todo.demo.dto.UserDto;
+import com.todo.demo.model.Category;
 import com.todo.demo.model.User;
 import com.todo.demo.model.UserHasCategory;
 import com.todo.demo.repository.UserRepository;
+import com.todo.demo.repository.UserRepositorySupport;
 import com.todo.demo.security.JwtTokenProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,13 +21,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final UserRepositorySupport userRepositorySupport;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider, UserRepositorySupport userRepositorySupport) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
+        this.userRepositorySupport = userRepositorySupport;
     }
-
 
     public List<User> findAll(){
         List<User> list = userRepository.findAll();
@@ -34,7 +37,6 @@ public class UserService {
 
     public User findOne(int id){
         User user = userRepository.getOne(id);
-
         return user;
     }
 
@@ -59,13 +61,14 @@ public class UserService {
         return jwtTokenProvider.createToken(String.valueOf(user.getId()));
     }
 
-    public User addCategory(User user, UserHasCategory userHasCategory){
-        user.addCategory(userHasCategory);
-        return user;
+    public List<User> getUsersByCategoryId(int categoryId){
+        return userRepositorySupport.findUsersByCategoryId(categoryId);
     }
-
-    public void getCategories(User user){
-
+    
+    public boolean isJoined(Category category, User user){
+        int categoryId = category.getId();
+        List<User> userList = userRepositorySupport.findUsersByCategoryId(categoryId);
+        return userList.contains(user);
     }
 
 }
