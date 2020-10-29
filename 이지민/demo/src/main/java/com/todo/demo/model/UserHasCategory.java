@@ -9,18 +9,18 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="user_has_category")
-@Getter @NoArgsConstructor
+ @NoArgsConstructor
 public class UserHasCategory {
 
     @EmbeddedId
-    private UserHasCategoryKey id;
+    private UserHasCategoryKey id = new UserHasCategoryKey();
 
-    @ManyToOne
+    @ManyToOne @Getter
     @MapsId("userId")
     @JoinColumn(name="user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne @Getter
     @MapsId("categoryId")
     @JoinColumn(name="category_id")
     private Category category;
@@ -28,6 +28,18 @@ public class UserHasCategory {
     @Setter
     @Column(columnDefinition = "TINYINT")
     private boolean level;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public boolean getLevel(){
+        return this.level;
+    }
 
     @Builder
     public UserHasCategory(User user, Category category, boolean level){
