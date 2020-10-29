@@ -39,12 +39,12 @@ public class User implements UserDetails {
     private String profile_image;
 
     @Setter
-    @OneToMany(mappedBy = "user")
-    private Set<UserHasCategory> categories;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<UserHasCategory> categories = new HashSet<>();
 
-    public void addCategory(UserHasCategory category){
-        Set<UserHasCategory> categories = this.getCategories();
-        categories.add(category);
+    public void addCategory(Category category, UserHasCategory usc){
+        categories.add(usc);
+        category.getUsers().add(usc);
     }
 
 

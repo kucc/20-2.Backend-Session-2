@@ -4,6 +4,7 @@ import lombok.*;
 import org.modelmapper.internal.util.Assert;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -27,18 +28,15 @@ public class Category {
     private List<ToDo> toDoList;
 
     @Setter
-    @OneToMany(mappedBy="category")
-    private Set<UserHasCategory> users;
+    @OneToMany(mappedBy="category",  cascade = CascadeType.ALL)
+    private Set<UserHasCategory> users = new HashSet<UserHasCategory>();
+
 
     public void addToDo(ToDo t){
         List<ToDo> toDos = getToDoList();
         toDos.add(t);
     }
 
-    public void addUser(UserHasCategory user){
-        Set<UserHasCategory> users = getUsers();
-        users.add(user);
-    }
 
     @Builder
     public Category(String title){
