@@ -2,12 +2,12 @@ package com.todo.demo.dto;
 
 import com.todo.demo.model.Category;
 import com.todo.demo.model.ToDo;
-import com.todo.demo.model.UserHasCategory;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CategoryDto {
 
@@ -23,22 +23,26 @@ public class CategoryDto {
         }
     }
 
-    public static class ListResponse{
-        private Integer num;
-        private List<CategoryDto.Response> categoryList;
-    }
-
     @Getter
     @Setter
+    @AllArgsConstructor
     public static class Response{
         private Integer id;
         private String title;
         private List<ToDo> toDoList;
 
-        public Response(Category category){
-            this.id = category.getId();
-            this.title = category.getTitle();
-            this.toDoList = category.getToDoList();
+        public static Response of(Category category){
+            int id = category.getId();
+            String title = category.getTitle();
+            List<ToDo> toDoList = category.getToDoList();
+
+            return  new Response(id, title, toDoList);
+        }
+
+        public static List<CategoryDto.Response> of(List<Category> categoryList){
+            return categoryList.stream()
+                    .map(Response::of)
+                    .collect(Collectors.toList());
         }
     }
 }
